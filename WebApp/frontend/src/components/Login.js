@@ -15,17 +15,19 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import gql from "graphql-tag";
+import { useQuery } from "@apollo/react-hooks";
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://codehiking.ca/">
-        CodeHiking
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
+      <Typography variant="body2" color="textSecondary" align="center">
+          {"Copyright © "}
+          <Link color="inherit" href="https://codehiking.com/">
+              CodeHiking
+          </Link>{" "}
+          {new Date().getFullYear()}
+          {"."}
+      </Typography>
   );
 }
 
@@ -96,6 +98,18 @@ export default function SignIn() {
     } else return true;
   }
 
+  function auth(id, pwd) {
+      if (validateForm) {
+          const LOGIN_MUTATION = gql`
+      mutation login(
+        $email: String!, 
+        $password: String!
+        ){
+
+      }
+  `;
+      }
+  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

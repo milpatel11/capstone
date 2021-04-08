@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -12,40 +12,130 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from "@material-ui/core/Grid";
-import Select from "@material-ui/core/Select";
+
+import gql from "graphql-tag";
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    marginTop: 10,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
+    root: {
+        flexGrow: 1,
+        marginTop: 10,
+    },
+    menuButton: {
+        marginRight: theme.spacing(2),
+    },
+    title: {
+        flexGrow: 1,
+    },
+    table: {
+        minWidth: 650,
+        alignItems: "center",
+    },
 }));
 
 export default function SpotManager() {
-  //const classes = useStyles();
+  const classes = useStyles();
+
+  // let SPOTS = [];
+  // const { loading, data } = useQuery();
+
+  // if (data) {
+  //     SPOTS = data["getParkingSports"];
+  // }
+ 
   return (
-    <>
-      <NavBar />
-    </>
+      <>
+          <NavBar />
+          <TableContainer component={Paper}>
+              <Table
+                  className={classes.table}
+                  size="small"
+                  aria-label="a dense table"
+              >
+                  <TableHead>
+                      <TableRow>
+                          <TableCell align="center">Slot Name</TableCell>
+
+                          <TableCell align="center">Status</TableCell>
+                      </TableRow>
+                  </TableHead>
+
+                  <TableBody>
+                      {/* {SPOTS.map((spot) => {
+                          return (
+                              <TableRow key={spot.id}>
+                                  <TableCell component="th" scope="row">
+                                      <TextField
+                                          id="standard-basic"
+                                          value={spot.parkingsportname}
+                                      />
+                                  </TableCell>
+                                  <TableCell component="th" scope="row">
+                                      <TextField
+                                          id="standard-basic"
+                                          value={spot.isActive}
+                                      />
+                                  </TableCell>
+                              </TableRow>
+                          );
+                      })} */}
+                  </TableBody>
+              </Table>
+          </TableContainer>
+      </>
   );
 }
+
+
+
+// const uery=()=>{
+//   const ADD_SPOT = gql`
+//   mutation createParkingSport(
+//       $parkingsportname: String!
+//       $avalible: Boolean!
+//   ) {
+//       createParkingSport(
+//           createParkingSportInput: {
+//               parkingsportname: $parkingsportname
+//               avalible: true
+//           }
+//       )
+//   }
+// `;
+// const [addSpot,loading] =  useMutation(ADD_SPOT,{
+//   update(proxy, result){
+//     console.log(result)
+//   },
+//   variables:{
+//     parkingsportname: spotName
+//   }
+// })
+
+
+
+
+// return (addSpot)? true:false;
+// }
 
 function NavBar() {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
     setOpen(false);
   };
+  const handleClose = () => {
+    setOpen(true);
+  };
+  
+  
   return (
     <>
       <AppBar position="static" className={classes.root}>
@@ -76,81 +166,25 @@ function NavBar() {
           </DialogContentText>
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} >
                 <TextField
-                  autoComplete="Spot Number"
-                  name="spotnumber"
-                  type="number"
+                  autoComplete="Spot Name"
+                  name="spotname"
+                  
                   variant="outlined"
                   required
                   fullWidth
-                  id="spotnumber"
-                  label="spotnumber"
-                  onChange={(event) =>
-                    event.target.value < 0
-                      ? (event.target.value = 0)
-                      : event.target.value
-                  }
+                  id="spotname"
+                  //value={spotName}
+                  label="Spot Name"
                   autoFocus
-                />
+                  //onChange={(e) => setSpotName(e.target.value)}
+                  />
+                 
+                  
+                
               </Grid>
-              <Grid item xs={12} sm={6}></Grid>
-              <Grid item xs={12}>
-                <Select
-                  native
-                  variant="outlined"
-                  label="Slot"
-                  value="Slot"
-                  placeholder="Slot"
-                  inputProps={{
-                    name: "slot",
-                    id: "outlined-age-native-simple",
-                  }}
-                >
-                  <option aria-label="Parking Slot" value="" />
-                  <option value={101}>A</option>
-                  <option value={202}>B</option>
-                  <option value={303}>C</option>
-                  <option value={404}>C</option>
-                </Select>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="mobile"
-                  label="Mobile Number"
-                  type="number"
-                  name="mobile"
-                  autoComplete="mobile"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}></Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password_confirm"
-                  label="Confirm Passsword"
-                  type="password"
-                  id="password_confirm"
-                  autoComplete="current-password"
-                />
-              </Grid>
+              
             </Grid>
           </form>
         </DialogContent>
