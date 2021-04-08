@@ -1,33 +1,37 @@
 import React, { useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
+
+import { LockOutlined as LockOutlinedIcon } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import {
+  DialogTitle,
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  Link,
+  Grid,
+  Box,
+  Typography,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+} from "@material-ui/core";
+
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 
 function Copyright() {
   return (
-      <Typography variant="body2" color="textSecondary" align="center">
-          {"Copyright © "}
-          <Link color="inherit" href="https://codehiking.com/">
-              CodeHiking
-          </Link>{" "}
-          {new Date().getFullYear()}
-          {"."}
-      </Typography>
+    <Typography variant="body2" color="textSecondary" align="center">
+      {"Copyright © "}
+      <Link color="inherit" href="https://codehiking.com/">
+        CodeHiking
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
   );
 }
 
@@ -73,7 +77,7 @@ export default function SignIn() {
 
   function handleReset() {
     return validateForm() ? handleClose() : null;
-    //reset passsowrd code
+    //reset password code
   }
   //form validtion/email only
   function validateForm() {
@@ -99,8 +103,8 @@ export default function SignIn() {
   }
 
   function auth(id, pwd) {
-      if (validateForm) {
-          const LOGIN_MUTATION = gql`
+    if (validateForm) {
+      const LOGIN_MUTATION = gql`
       mutation login(
         $email: String!, 
         $password: String!
@@ -108,7 +112,7 @@ export default function SignIn() {
 
       }
   `;
-      }
+    }
   }
   return (
     <Container component="main" maxWidth="xs">

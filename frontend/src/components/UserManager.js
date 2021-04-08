@@ -1,134 +1,122 @@
 import React, { useState } from "react";
+
 import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import TextField from "@material-ui/core/TextField";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Grid from "@material-ui/core/Grid";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  IconButton,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Grid,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@material-ui/core";
+
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-        marginTop: 10,
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-    title: {
-        flexGrow: 1,
-    },
-    form: {
-        width: "100%", // Fix IE 11 issue.
-        marginTop: theme.spacing(3),
-    },
-    table: {
-        minWidth: 650,
-    },
+  root: {
+    flexGrow: 1,
+    marginTop: 10,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  table: {
+    minWidth: 650,
+  },
 }));
 
 export default function UserManager() {
   const classes = useStyles();
-  
-  
+
   let USERS = [];
   const { loading, data } = useQuery(FETCH_USERS_QUERY);
 
   if (data) {
-      USERS = data["getUsers"];
+    USERS = data["getUsers"];
   }
-  
-  
-  return (
-      <>
-          <NavBar />
-          <TableContainer component={Paper}>
-              <Table
-                  className={classes.table}
-                  size="small"
-                  aria-label="a dense table"
-              >
-                  <TableHead>
-                      <TableRow>
-                          <TableCell>First Name</TableCell>
-                          <TableCell align="center">Last Name</TableCell>
-                          <TableCell align="center">Email</TableCell>
-                          <TableCell align="center">Mobile No</TableCell>
-                          <TableCell align="center">Admin</TableCell>
-                          <TableCell align="center">Update</TableCell>
-                      </TableRow>
-                  </TableHead>
 
-                  <TableBody>
-                      {USERS.map((user) => {
-                          return (
-                              <TableRow key={user.id}>
-                                  <TableCell component="th" scope="row">
-                                      <TextField
-                                          id="standard-basic"
-                                          value={user.firstname}
-                                      />
-                                  </TableCell>
-                                  <TableCell component="th" scope="row">
-                                      <TextField
-                                          id="standard-basic"
-                                          value={user.lastname}
-                                      />
-                                  </TableCell>
-                                  <TableCell component="th" scope="row">
-                                      <TextField
-                                          id="standard-basic"
-                                          value={user.email}
-                                      />
-                                  </TableCell>
-                                  <TableCell component="th" scope="row">
-                                      <TextField
-                                          id="standard-basic"
-                                          value={user.phonenumber}
-                                      />
-                                  </TableCell>
-                                  <TableCell component="th" scope="row">
-                                      <TextField id="standard-basic" value="" />
-                                  </TableCell>
-                              </TableRow>
-                          );
-                      })}
-                  </TableBody>
-              </Table>
-          </TableContainer>
-      </>
+  return (
+    <>
+      <NavBar />
+      <TableContainer component={Paper}>
+        <Table
+          className={classes.table}
+          size="small"
+          aria-label="a dense table"
+        >
+          <TableHead>
+            <TableRow>
+              <TableCell>First Name</TableCell>
+              <TableCell align="center">Last Name</TableCell>
+              <TableCell align="center">Email</TableCell>
+              <TableCell align="center">Mobile No</TableCell>
+              <TableCell align="center">Admin</TableCell>
+              <TableCell align="center">Update</TableCell>
+            </TableRow>
+          </TableHead>
+
+          <TableBody>
+            {USERS.map((user) => {
+              return (
+                <TableRow key={user.id}>
+                  <TableCell component="th" scope="row">
+                    <TextField id="standard-basic" value={user.firstname} />
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    <TextField id="standard-basic" value={user.lastname} />
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    <TextField id="standard-basic" value={user.email} />
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    <TextField id="standard-basic" value={user.phonenumber} />
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    <TextField id="standard-basic" value="" />
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
 }
 
 const FETCH_USERS_QUERY = gql`
-    query {
-        getUsers {
-            id
-            firstname
-            lastname
-            email
-            password
-            phonenumber
-        }
+  query {
+    getUsers {
+      id
+      firstname
+      lastname
+      email
+      password
+      phonenumber
     }
+  }
 `;
-
-
 
 function NavBar() {
   const classes = useStyles();
@@ -136,10 +124,8 @@ function NavBar() {
   const handleClickOpen = () => {
     setOpen(true);
   };
-  const handleClose = () => {
-    
-  };
-  
+  const handleClose = () => {};
+
   const [f, setF] = useState();
   const [lastname, setLastname] = useState();
   const [email, setEmail] = useState();
@@ -148,16 +134,25 @@ function NavBar() {
   const [mobile, setMobile] = useState();
 
   const ADD_USER = gql`
-  mutation{ 
-    createUser(userInput:{
-      firstname:f
-      lastname:lastname
-      email:email
-      password:password
-      phonenumber:mobile
-    }){
-      id firstname lastname email password phonenumber
-  }}`;
+    mutation {
+      createUser(
+        userInput: {
+          firstname: f
+          lastname: lastname
+          email: email
+          password: password
+          phonenumber: mobile
+        }
+      ) {
+        id
+        firstname
+        lastname
+        email
+        password
+        phonenumber
+      }
+    }
+  `;
   return (
     <>
       <AppBar position="static" className={classes.root}>
@@ -197,7 +192,6 @@ function NavBar() {
                   fullWidth
                   id="firstName"
                   label="First Name"
-                 
                   autoFocus
                 />
               </Grid>
@@ -210,7 +204,7 @@ function NavBar() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="lname"
-                  onChange={(text)=>setLastname(text)}
+                  onChange={(text) => setLastname(text)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -223,7 +217,7 @@ function NavBar() {
                   name="email"
                   type="email"
                   autoComplete="email"
-                  onChange={(text)=>setEmail(text)}
+                  onChange={(text) => setEmail(text)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -236,7 +230,7 @@ function NavBar() {
                   type="number"
                   name="mobile"
                   autoComplete="mobile"
-                  onChange={(text)=>setMobile(text)}
+                  onChange={(text) => setMobile(text)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}></Grid>
@@ -249,9 +243,8 @@ function NavBar() {
                   label="Password"
                   type="password"
                   id="password"
-                  
                   autoComplete="current-password"
-                  onChange={(text)=>setPassword(text)}
+                  onChange={(text) => setPassword(text)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -264,7 +257,7 @@ function NavBar() {
                   type="password"
                   id="password_confirm"
                   autoComplete="current-password"
-                  onChange={(text)=>setCPassword(text)}
+                  onChange={(text) => setCPassword(text)}
                 />
               </Grid>
             </Grid>
@@ -283,7 +276,6 @@ function NavBar() {
   );
 }
 
-
 function validateEmail(email) {
   const re = /^[-!#$%&'+\/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'+\/0-9=?A-Z^_a-z`{|}~])@[a-zA-Z0-9](-\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
   console.log(re.test(String(email).toLowerCase()));
@@ -298,12 +290,12 @@ function validateMobile(text) {
 
 function validateForm(email, password, cpassword, mobile) {
   return validateEmail(email)
-      ? validatePassword(password, cpassword)
-          ? validateMobile(mobile)
-              ? "Successfully Registered"
-              : "Invalid Mobile Number"
-          : "Password Mismatch\n"
-      : "Invalid Email\n";
+    ? validatePassword(password, cpassword)
+      ? validateMobile(mobile)
+        ? "Successfully Registered"
+        : "Invalid Mobile Number"
+      : "Password Mismatch\n"
+    : "Invalid Email\n";
 }
 
 // function register(first, last, email, password, mobile,cpassword, ) {
